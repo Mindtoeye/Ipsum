@@ -140,7 +140,7 @@ function Tile ()
 			image.attr({x: tileX, y: tileY});
 			shade.attr({x: tileX, y: tileY});
 		}	
-	}	
+	};
 	
 	/**
 	*
@@ -155,7 +155,7 @@ function Tile ()
 			image.attr({x: anX, y: anY});	
 			shade.attr({x: anX, y: anY});			
 		}	
-	}
+	};
 	
 	/**
 	*
@@ -167,7 +167,7 @@ function Tile ()
 			image.attr ({width: tileWidth, height: tileHeight});
 			shade.attr ({width: tileWidth, height: tileHeight});
 		}
-	}
+	};
 	
 	/**
 	*
@@ -195,7 +195,7 @@ function Tile ()
 		{
 			shade.attr({"fill-opacity": aValue});
 		}	
-	}
+	};
 	
 	/**
 	*

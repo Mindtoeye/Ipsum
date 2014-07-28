@@ -148,7 +148,7 @@ function DescentObject ()
 		label=aLabel;	
 		
 		reference = paper.rect(placeX,placeY, 20, 20).attr({fill: '#F00'});		
-	}
+	};
 	
 	/**
 	*
@@ -175,7 +175,7 @@ function DescentObject ()
 		{
 			sparks.move(placeX, placeY);
 		}
-	}
+	};
 	
 	/**
 	*
@@ -200,7 +200,7 @@ function DescentObject ()
 		{
 			reference.glow({color: '#000', offsetx: 2, offsety: 2 });
 		}	
-	}
+	};
 }
 
 DescentObject.prototype = Object.create(Base.prototype);

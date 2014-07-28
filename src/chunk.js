@@ -66,7 +66,7 @@ function Chunk ()
 	{
 		//debug ("getTile ("+cellX+","+cellY+")");
 		
-		for (i=0;i<cells.length;i++)
+		for (var i=0;i<cells.length;i++)
 		{
 			var testTile=cells [i];
 			

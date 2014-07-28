@@ -26,7 +26,7 @@ function addLight (aLabel)
 */
 function moveLights (anX,anY)
 {
-	for (i=0;i<lights.length;i++)
+	for (var i=0;i<lights.length;i++)
 	{
 		lights [i].move (anX,anY);
 	}

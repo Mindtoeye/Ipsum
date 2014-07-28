@@ -144,7 +144,7 @@ function checkChunks ()
 		   ======================================================
 		*/
 		
-		for (i=0;i<chunksCache.length;i++)
+		for (var i=0;i<chunksCache.length;i++)
 		{
 			var testChunk=chunksCache [i];
 			
@@ -159,7 +159,7 @@ function checkChunks ()
 */
 function moveChunks (anX,anY)
 {
-	for (i=0;i<chunksCache.length;i++)
+	for (var i=0;i<chunksCache.length;i++)
 	{
 		chunksCache [i].move (anX,anY);
 	}

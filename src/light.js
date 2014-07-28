@@ -32,14 +32,14 @@ function Light ()
 				up=false;
 			}		
 		}
-	}
+	};
 	/**
 	*
 	*/
 	this.getBrightness=function getBrightness ()
 	{
 		return (currentValue);
-	}
+	};
 	/**
 	*
 	*/
@@ -53,7 +53,7 @@ function Light ()
 		
 		anim = Raphael.animation({transform: "r360"}, 5000).repeat(Infinity);
 		this.getReference ().animate(anim);
-	}	
+	};
 }
 
 Light.prototype = Object.create(DescentObject.prototype);

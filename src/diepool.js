@@ -12,7 +12,7 @@ function DiePool ()
 	this.addDie=function addDie (aDie)
 	{
 		dies.push (aDie);
-	}
+	};
 	/**
 	*
 	*/
@@ -40,5 +40,5 @@ function DiePool ()
 			
 			aDie.unload  ();		
 		}		
-	}
+	};
 }

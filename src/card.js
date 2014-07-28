@@ -17,7 +17,7 @@ function Card ()
 		this.setLabel (aURL);
 	
 		this.setReference (paper.image (aURL,anX,anY,aWidth,aHeight));
-	}
+	};
 }
 
 Card.prototype = Object.create(DescentObject.prototype);

@@ -127,7 +127,7 @@ function Particle(context)
     
     this.setImage = function(image){
         this.image = image;
-    }
+    };
 }
 
 // A function to generate a random number between 2 values

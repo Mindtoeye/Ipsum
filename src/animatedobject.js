@@ -19,7 +19,7 @@ function AnimatedObject ()
 		
 		anim = Raphael.animation({transform: "r360"}, 5000).repeat(Infinity);
 		this.getReference ().animate(anim);
-	}	
+	};
 }
 
 DescentObject.prototype = Object.create(DescentObject.prototype);
