@@ -70,11 +70,13 @@ function calculateLights ()
 						
 		// Change the brightness of all the tiles around this light
 		
-		var newFalloff=newBrightness+0.2;
+		var newFalloff=newBrightness+0.1;
 		
-		if (newFalloff>1)
+		newFalloff+=0.1;
+		
+		if (newFalloff>defaultBrightness)
 		{
-			newFalloff=1;
+			newFalloff=defaultBrightness;
 		}
 		
 		//debug ("Brightness: " + newBrightness + ", Falloff: " + newFalloff);
