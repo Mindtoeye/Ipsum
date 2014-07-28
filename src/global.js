@@ -3,6 +3,7 @@
 
 var paper=null;
 var scale=1;
+var defaultBrightness=0.8;
 
 // World objects
 	

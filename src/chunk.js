@@ -8,6 +8,9 @@ function Chunk ()
 	var cells=null;
 	var loaded=false;
 	
+	var cellX =0; // top left cell
+	var cellY =0; // top left cell	
+	
 	var chunkLeft=0;
 	var chunkTop=0;
 	var chunkRight=0;
@@ -16,10 +19,66 @@ function Chunk ()
 	/**
 	*
 	*/
+	this.setCellX=function setCellX (aValue)
+	{
+		cellX=aValue;
+	};
+	/**
+	*
+	*/
+	this.getCellX=function getCellX ()
+	{
+		return (cellX);
+	};
+	
+	/**
+	*
+	*/
+	this.setCellY=function setCellY (aValue)
+	{
+		cellY=aValue;
+	};
+	/**
+	*
+	*/
+	this.getCellY=function getCellY ()
+	{
+		return (cellY);
+	};
+	
+	/**
+	*
+	*/
 	this.place=function place (tileX,tileY)
 	{		
 		placeX=tileX*tileWidth;
 		placeY=tileY*tileHeight;
+		
+		this.setCellX (tileX);
+		this.setCellY (tileY);
+	};
+	
+	/**
+	* Nice and quick way to get target tile. Nice because it ONLY
+	* finds visible tiles!
+	*/
+	this.getTile=function getTile (cellX,cellY)
+	{
+		//debug ("getTile ("+cellX+","+cellY+")");
+		
+		for (i=0;i<cells.length;i++)
+		{
+			var testTile=cells [i];
+			
+			//debug ("Comparing " + cellX + "," + cellY + ", to: " + testTile.getCellX () + "," + testTile.getCellY ());
+			
+			if ((testTile.getCellX ()==cellX) && (testTile.getCellY ()==cellY))
+			{
+				return (testTile);
+			}
+		}	
+				
+		return (null);
 	};
 	
 	/**
@@ -43,42 +102,60 @@ function Chunk ()
 		
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX);
+		cell.setCellY (cellY);
 		cells.push (cell);
 				
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+1);
+		cell.setCellY (cellY);		
 		cells.push (cell);
 
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+2);
+		cell.setCellY (cellY);		
 		cells.push (cell);
 
 		// Row 2 ...
 		
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX);
+		cell.setCellY (cellY+1);		
 		cells.push (cell);
 		
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+1);
+		cell.setCellY (cellY+1);		
 		cells.push (cell);
 
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+2);
+		cell.setCellY (cellY+1);		
 		cells.push (cell);
 
 		// Row 3 ...
 		
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX);
+		cell.setCellY (cellY+2);
 		cells.push (cell);
 		
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+1);
+		cell.setCellY (cellY+2);		
 		cells.push (cell);
 
 		cell=new Tile ();
 		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.setCellX (cellX+2);
+		cell.setCellY (cellY+2);		
 		cells.push (cell);
 		
 		cells [0].place(placeX,placeY);	

@@ -9,6 +9,8 @@ function Tile ()
 {
     Base.call(this, "Tile","tile");
 	
+	var cellX =0;
+	var cellY =0;	
 	var tileX =0;
 	var tileY =0;
 	var width =tileWidth;
@@ -16,6 +18,39 @@ function Tile ()
 	var src   ="textures/";
 	var image =null;
 	var shade =null;
+	
+
+	/**
+	*
+	*/
+	this.setCellX=function setCellX (aValue)
+	{
+		cellX=aValue;
+	};
+	/**
+	*
+	*/
+	this.getCellX=function getCellX ()
+	{
+		return (cellX);
+	};
+	
+	/**
+	*
+	*/
+	this.setCellY=function setCellY (aValue)
+	{
+		cellY=aValue;
+	};
+	/**
+	*
+	*/
+	this.getCellY=function getCellY ()
+	{
+		return (cellY);
+	};
+	
+	
 	
 	/**
 	*
@@ -143,7 +178,7 @@ function Tile ()
 		
 		if (paper!=null)
 		{
-			shade=paper.rect(tileX,tileY,128,128, 0).attr({fill: "#000000", "fill-opacity": 0.7, stroke: "none"});
+			shade=paper.rect(tileX,tileY,128,128, 0).attr({fill: "#000000", "fill-opacity": defaultBrightness, stroke: "none"});
 			image=paper.image (url,tileX,tileY,128,128);
 			
 			shade.toBack ();		

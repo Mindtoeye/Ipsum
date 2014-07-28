@@ -5,7 +5,41 @@
 function Light ()
 {
     DescentObject.call(this, "Light","light");
+	
+	var currentValue=defaultBrightness;
+	var up=false;
 
+	/**
+	*
+	*/
+	this.vacillate=function vacillate ()
+	{
+		if (up==false)
+		{
+			currentValue+=0.1;
+			
+			if (currentValue>defaultBrightness)
+			{
+				up=true;
+			}
+		}
+		else
+		{
+			currentValue-=0.1;
+			
+			if (currentValue<0.2)
+			{
+				up=false;
+			}		
+		}
+	}
+	/**
+	*
+	*/
+	this.getBrightness=function getBrightness ()
+	{
+		return (currentValue);
+	}
 	/**
 	*
 	*/

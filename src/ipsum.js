@@ -275,6 +275,7 @@ function startEngine ()
 	createDies ();
 	
 	window.setInterval(eventTick,1000);	
+	window.setInterval(calculateLights,200);	
 }
 
 /**
@@ -311,10 +312,13 @@ function placeScreenObject (anObj,aLocation)
 */
 function eventTick ()
 {
+	calculateLights ();
+
 	if (nextTimeout<=0)
 	{
 		nextTimeout=Math.floor(Math.random() * 20); // max 5 seconds
 	
+		/*
 		if (diePool!=null)
 		{
 			diePool.unload ();
@@ -326,6 +330,7 @@ function eventTick ()
 		diePool.addDie (getDie (Math.floor(Math.random() * 6)));
 		diePool.addDie (getDie (Math.floor(Math.random() * 6)));
 		diePool.roll ();
+		*/
 	}
 	else
 	{
