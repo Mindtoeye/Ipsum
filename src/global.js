@@ -7,6 +7,7 @@ var scale=1;
 // World objects
 	
 var chunks=new Array ();
+var chunksCache=new Array ();
 var objects=new Array ();
 var icons=new Array ();
 var lights=new Array ();
@@ -37,4 +38,7 @@ var nextTimeout=0;
 
 // Game objects
 
+var globalXReference=0;
+var globalYReference=0;
 var diePool=null;
+

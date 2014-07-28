@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Descent Online</title>
+        <title>Ipsum RGP Sandbox</title>
 		
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">		
 
@@ -25,8 +25,11 @@
 		<script src="src/die.js"></script>
 		<script src="src/diepool.js"></script>
 		<script src="src/card.js"></script>
+		<script src="src/chunkengine.js"></script>
+		<script src="src/objects.js"></script>
+		<script src="src/lighting.js"></script>
 		<script src="src/ipsum.js"></script>
-		
+
         <style type="text/css">
             html, body
 			{
@@ -62,11 +65,19 @@
     <body onload="startEngine ()">	
 		<table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center" valign="middle" border="0">		
 		<tr>
-			<td align="center" valign="middle">	
+			<td align="center" valign="middle" colspan="2">	
 			<canvas id="background" class="background"></canvas>				
 			<div id="canvas" class="game">
 				<img src="images/logo.png" style="position: absolute; top: 590px; left: -20px;">
 			</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="chunkinfo" align="left"  width="250" style="font-family: Verdana; font-size: 8pt; color: #ffffff; height: 25px;">
+			Chunk info
+			</td>
+			<td id="statusbar" align="left" style="font-family: Verdana; font-size: 8pt; color: #ffffff; height: 25px;">
+			Status
 			</td>
 		</tr>
 		</table>		

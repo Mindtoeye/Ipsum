@@ -103,6 +103,11 @@ function processMouseMove (event, a, b)
 					
 	moveScene (fx-xLast,fy-yLast);
 
+	globalXReference+=(fx-xLast);
+	globalYReference+=(fy-yLast);
+	
+	setStatus ("x: " + globalXReference + ", y: " + globalYReference);
+	
 	checkChunks ();	
 	
 	xLast=fx;
@@ -121,40 +126,6 @@ function processMouseOut (event, a, b)
 	mouseDown=false;
 }
 
-function getTile (cellX,cellY)
-{
-	debug ("getTile ("+cellX+","+cellY+")");
-	
-	debug ("Chunks: " + chunks.length);
-
-	return (null);
-}
-
-/**
-*
-*/
-function addChunk (x,y)
-{
-	debug ("addChunk ("+x+","+y+")");
-
-   var chunk=new Chunk ();
-   chunk.place (x,y); // Initial placement, should be remembered by the chunk
-   chunk.load ();
-   
-   chunks.push (chunk);
-}
-
-/**
-*
-*/
-function placeScene (deltaX,deltaY)
-{
-	for (var i=0;i<chunks.length;i++)
-	{
-		chunks [i].place (deltaX,deltaY);
-	}
-}
-
 /**
 *
 */
@@ -164,72 +135,14 @@ function moveScene (deltaX,deltaY)
 
 	var i=0;
 
-	for (i=0;i<chunks.length;i++)
-	{
-		chunks [i].move (deltaX,deltaY);
-	}
+	moveChunks (deltaX,deltaY);
 	
 	for (i=0;i<objects.length;i++)
 	{
 		objects [i].move (deltaX,deltaY);
-	}	
-	
-	for (i=0;i<lights.length;i++)
-	{
-		lights [i].move (deltaX,deltaY);
-	}	
-}
-
-/**
-*
-*/
-function checkChunks ()
-{
-	//debug ("checkChunks ()");
-	
-	var testTop=0;
-	var testLeft=0;
-	var testRight=mouseHitBox.attrs.width;
-	var testBottom=mouseHitBox.attrs.height;
-
-	for (var i=0;i<chunks.length;i++)
-	{
-		var testChunk=chunks [i];
-		
-		if (testChunk.testBounds (testTop,testLeft,testRight,testBottom)==false)
-		{
-			testChunk.unload ();
-		}
-		else
-		{
-			testChunk.load ();
-		}
-	}	
-}
-
-/**
-*
-*/
-function calculateLights ()
-{
-	debug ("calculateLights ()");
-	
-	for (var i=0;i<lights.length;i++)
-	{
-		var aLight=lights [i];
-		
-		var cellX=aLight.getCellX ();
-		var cellY=aLight.getCellY ();
-		
-		debug ("Processing light " + i + ", at: " + cellX + ", " + cellY);
-		
-		var aTile=getTile (cellX,cellY);
-		
-		if (aTile!=null)
-		{
-			aTile.setBrightness (0.1);
-		}
 	}
+	
+	moveLights (deltaX,deltaY);
 }
 
 /**
@@ -240,68 +153,6 @@ function scaleScene (aDelta)
 	debug ("scaleScene ("+aDelta+")");
 		
 	//circle.scale(scale);
-}
-
-/**
-*
-*/
-function addLight (aLabel)
-{
-	debug ("addLight ()");
-
-	var obj=new Light ();
-	
-	lights.push (obj);
-	
-	obj.init (Math.floor((Math.random() * (500)) + 1),
-			  Math.floor((Math.random() * (500)) + 1),
-			  aLabel);
-
-	objID++;
-	
-	return (obj);	
-}
-
-/**
-*
-*/
-function addAnimatedObject (aLabel)
-{
-	debug ("addAnimatedObject ()");
-
-	var obj=new AnimatedObject ();
-	
-	objects.push (obj);
-	
-	obj.init (Math.floor((Math.random() * (500)) + 1),
-			  Math.floor((Math.random() * (500)) + 1),
-			  aLabel);
-			  
-	//obj.addSparks ();
-	
-	objID++;
-	
-	return (obj);	
-}
-
-/**
-*
-*/
-function addImageObject (aUrl)
-{
-	debug ("addImageObject ()");
-
-	var obj=new ImageObject ();
-	
-	objects.push (obj);
-	
-	obj.init (Math.floor((Math.random() * (500)) + 1),
-			  Math.floor((Math.random() * (500)) + 1),
-			  aUrl);
-	
-	objID++;
-	
-	return (obj);
 }
 
 /**
@@ -395,20 +246,6 @@ function addInteractionLayer ()
 /**
 *
 */
-function bindToCell (anObject,cellX,cellY)
-{
-	debug ("bindToCell ()");
-	
-	var xLocation=(cellX*tileWidth);
-	var yLocation=(cellY*tileHeight);
-	
-	anObject.setPlace (xLocation+((tileWidth-anObject.getWidth ())/2),yLocation+((tileHeight-anObject.getHeight ())/2));
-	anObject.setCellXY (cellX,cellY);
-}
-
-/**
-*
-*/
 function startEngine ()
 {
 	debug ("startEngine ()");
@@ -469,7 +306,8 @@ function placeScreenObject (anObj,aLocation)
 }
 
 /**
-*
+* Main even tick occuring once a second. Use this to setup non real-time events
+* that do not have to occur frequently
 */
 function eventTick ()
 {
