@@ -2,23 +2,25 @@
 /**
 *
 */
-function DescentObject ()
+function IpsumObject ()
 {
-    Base.call(this, "AnimatedObject","object");
+    Base.call(this, "IpsumObject","object");
 	
 	var placeX=0;
-	var placeY=0;
-	var label="undefined";
-	
-	var reference=null;
-	var glowSet=null;
-	var anim=null;
-	
-	var sparks=null;
-	
+	var placeY=0;	
 	var cellX=0;
-	var cellY=0;
-
+	var cellY=0;	
+	var label="undefined";	
+	var reference=null;
+	
+	/**
+	*
+	*/
+	this.init=function init ()
+	{
+		debug ("To be implemented in child class");
+	};	
+	
 	/**
 	*
 	*/
@@ -45,7 +47,8 @@ function DescentObject ()
 		
 		if (reference!=null)
 		{
-			reference.attr({x: placeX, y: placeY});
+			reference.position.x=placeX;
+			reference.position.y=placeY;
 		}
 	};
 	
@@ -97,9 +100,8 @@ function DescentObject ()
 	{
 		if (reference!=null)
 		{
-			var bbox=reference.getBBox (false);
-			
-			return (bbox.width);
+
+			return (0);
 		}
 		
 		return (0);
@@ -112,9 +114,7 @@ function DescentObject ()
 	{
 		if (reference!=null)
 		{
-			var bbox=reference.getBBox (false);
-			
-			return (bbox.width);
+			return (0);
 		}
 		
 		return (0);
@@ -147,7 +147,6 @@ function DescentObject ()
 		placeY=anY;
 		label=aLabel;	
 		
-		reference = paper.rect(placeX,placeY, 20, 20).attr({fill: '#F00'});		
 	};
 	
 	/**
@@ -157,51 +156,9 @@ function DescentObject ()
 	{
 		placeX+=deltaX;
 		placeY+=deltaY;
-					
-		if (reference!=null)
-		{
-			reference.attr({x: placeX, y: placeY});
-		
-			if (glowSet!=null)
-			{
-				for (var i=0;i<glowSet.length;i++)
-				{			
-					glowSet [i].attr({x: placeX, y: placeY});
-				}	
-			}
-		}	
-		
-		if (sparks!=null)
-		{
-			sparks.move(placeX, placeY);
-		}
-	};
-	
-	/**
-	*
-	*/
-	this.addSparks=function addSparks ()
-	{
-		sparks = new Sparks(paper);
-		
-		// Move particle generator
-		sparks.settings.color = '#eee';
-		sparks.settings.radius = 3;	
-		sparks.move(placeX, placeY);
-		sparks.start();
-	};
-	
-	/**
-	*
-	*/
-	this.addShadow=function addShadow ()
-	{
-		if (reference!=null)
-		{
-			reference.glow({color: '#000', offsetx: 2, offsety: 2 });
-		}	
+
 	};
 }
 
-DescentObject.prototype = Object.create(Base.prototype);
-DescentObject.prototype.constructor = Base;
+IpsumObject.prototype = Object.create(Base.prototype);
+IpsumObject.prototype.constructor = Base;

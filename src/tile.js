@@ -1,13 +1,13 @@
 
-var tileWidth=128;
-var tileHeight=128;
+var tileWidth=10;
+var tileHeight=10;
 
 /**
 *
 */
-function Tile ()
+function Tile (aTexture)
 {
-    Base.call(this, "Tile","tile");
+    IpsumObject.call(this, "Tile","tile");
 	
 	var cellX =0;
 	var cellY =0;	
@@ -15,11 +15,39 @@ function Tile ()
 	var tileY =0;
 	var width =tileWidth;
 	var height=tileHeight;
-	var src   ="textures/";
-	var image =null;
-	var shade =null;
-	
 
+	var myTexture = null;
+	var myPolygonMaterial = null;
+	var polygonObject = null;
+	var geo = new THREE.Geometry();
+
+	/**
+	*
+	*/
+	this.init=function init ()
+	{
+		debug ("init ()");
+		
+		geo.vertices.push( new THREE.Vector3( 0.0, 0.0, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( tileWidth, 0.0, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( tileWidth, tileWidth, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( 0.0, tileWidth, 0.0 ) );
+						
+		geo.faces.push( new THREE.Face3( 0, 1, 2 ) );
+		geo.faces.push( new THREE.Face3( 0, 2, 3 ) );
+		
+		geo.faceVertexUvs [0].push([ uvs[0], uvs[1], uvs[2]]);
+		geo.faceVertexUvs [0].push([ uvs[0], uvs[2], uvs[3]]);
+		geo.computeFaceNormals();
+		
+		myTexture = THREE.ImageUtils.loadTexture (aTexture);
+		myPolygonMaterial = new THREE.MeshLambertMaterial ({map: myTexture});
+		myPolygonMaterial.side = THREE.DoubleSide;
+		polygonObject = new THREE.Mesh (geo,myPolygonMaterial);
+
+		this.setReference (polygonObject);		
+	};		
+	
 	/**
 	*
 	*/
@@ -134,12 +162,9 @@ function Tile ()
 	{
 		tileX+=deltaX;
 		tileY+=deltaY;
-			
-		if (image!=null)
-		{
-			image.attr({x: tileX, y: tileY});
-			shade.attr({x: tileX, y: tileY});
-		}	
+
+		polygonObject.position.x=tileX;
+		polygonObject.position.y=tileY;
 	};
 	
 	/**
@@ -150,11 +175,8 @@ function Tile ()
 		tileX=anX;
 		tileY=anY;
 	
-		if (image!=null)
-		{
-			image.attr({x: anX, y: anY});	
-			shade.attr({x: anX, y: anY});			
-		}	
+		polygonObject.position.x=tileX;
+		polygonObject.position.y=tileY;
 	};
 	
 	/**
@@ -162,28 +184,15 @@ function Tile ()
 	*/
 	this.resize=function (aWidth,aHeight)
 	{
-		if (image!=null)
-		{
-			image.attr ({width: tileWidth, height: tileHeight});
-			shade.attr ({width: tileWidth, height: tileHeight});
-		}
+
 	};
 	
 	/**
 	*
 	*/
-	this.load=function load (url)
+	this.load=function load ()
 	{
-		this.setSrc (url);
-		
-		if (paper!=null)
-		{
-			shade=paper.rect(tileX,tileY,128,128, 0).attr({fill: "#000000", "fill-opacity": defaultBrightness, stroke: "none"});
-			image=paper.image (url,tileX,tileY,128,128);
-			
-			shade.toBack ();		
-			image.toBack ();		
-		}
+
 	};
 	
 	/**
@@ -191,10 +200,7 @@ function Tile ()
 	*/
 	this.setBrightness=function setBrightness (aValue)
 	{
-		if (shade!=null)
-		{
-			shade.attr({"fill-opacity": aValue});
-		}	
+		myPolygonMaterial.opacity=aValue;
 	};
 	
 	/**
@@ -202,18 +208,9 @@ function Tile ()
 	*/
 	this.unload=function unload ()
 	{
-		if (image!=null)
-		{
-			image.hide ();
-			image.remove ();
-			image.removeData ();
-			
-			shade.hide ();
-			shade.remove ();
-			shade.removeData ();			
-		}
+		
 	};
 }
 
-Tile.prototype = Object.create(Base.prototype);
-Tile.prototype.constructor = Base;
+Tile.prototype = Object.create(IpsumObject.prototype);
+Tile.prototype.constructor = IpsumObject;

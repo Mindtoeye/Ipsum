@@ -4,7 +4,7 @@
 */
 function ImageObject ()
 {
-    DescentObject.call(this, "ImageObject","object");
+    IpsumObject.call(this, "ImageObject","object");
 
 	/**
 	*
@@ -20,5 +20,5 @@ function ImageObject ()
 	}
 }
 
-ImageObject.prototype = Object.create(DescentObject.prototype);
-ImageObject.prototype.constructor = DescentObject;
+ImageObject.prototype = Object.create(IpsumObject.prototype);
+ImageObject.prototype.constructor = IpsumObject;

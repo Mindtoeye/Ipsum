@@ -4,7 +4,7 @@
 */
 function Card ()
 {
-    DescentObject.call(this, "Card","object");
+    IpsumObject.call(this, "Card","object");
 
 	/**
 	*
@@ -20,5 +20,5 @@ function Card ()
 	};
 }
 
-Card.prototype = Object.create(DescentObject.prototype);
-Card.prototype.constructor = DescentObject;
+Card.prototype = Object.create(IpsumObject.prototype);
+Card.prototype.constructor = IpsumObject;

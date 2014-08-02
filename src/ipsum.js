@@ -70,18 +70,18 @@ function processMouseMove (event, a, b)
 {
 	//debug ("processMouseMove ("+mouseMoving+","+mouseDown+")");
 
+	if (mouseDown==false)
+	{
+		//debug ("bump (mouseDown)");
+		return;
+	}	
+	
 	if (mouseMoving==true)
 	{
 		//debug ("bump (mouseMoving)");
 		return;
 	}
-	
-	if (mouseDown==false)
-	{
-		//debug ("bump (mouseDown)");
-		return;
-	}
-	
+		
 	mouseMoving=true;
 	
 	//debug ("moving ...");
@@ -275,7 +275,7 @@ function startEngine ()
 	createDies ();
 	
 	window.setInterval(eventTick,1000);	
-	window.setInterval(calculateLights,200);	
+	window.setInterval(calculateLights,200);
 }
 
 /**
@@ -312,7 +312,7 @@ function placeScreenObject (anObj,aLocation)
 */
 function eventTick ()
 {
-	calculateLights ();
+	//calculateLights ();
 
 	if (nextTimeout<=0)
 	{

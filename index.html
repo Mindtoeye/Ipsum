@@ -7,8 +7,9 @@
 
         <script src="lib/jquery-2.1.1.min.js"></script>
         <script src="lib/jquery.mousewheel.min.js"></script>		
-		<script src="lib/raphael-min.js"></script>	
-		<script src="lib/sparks.js"></script>				
+		<script src="lib/raphael-min.js"></script>
+		<script src="lib/sparks.js"></script>
+		<script src="lib/three.min.js"></script>
 		
 		<script src="src/global.js"></script>
 		<script src="src/clouds.js"></script>				
@@ -16,8 +17,6 @@
 		<script src="src/tools.js"></script>
 		<script src="src/images.js"></script>
 		<script src="src/base.js"></script>
-		<script src="src/tile.js"></script>
-		<script src="src/chunk.js"></script>
 		<script src="src/object.js"></script>		
 		<script src="src/animatedobject.js"></script>		
 		<script src="src/imageobject.js"></script>
@@ -25,10 +24,16 @@
 		<script src="src/die.js"></script>
 		<script src="src/diepool.js"></script>
 		<script src="src/card.js"></script>
+		<script src="src/tile.js"></script>
+		<script src="src/chunk.js"></script>		
 		<script src="src/chunkengine.js"></script>
 		<script src="src/objects.js"></script>
 		<script src="src/lighting.js"></script>
+		<script src="src/wanderer.js"></script>				
+		<script src="src/engine.js"></script>		
+		<!--
 		<script src="src/ipsum.js"></script>
+		-->
 
         <style type="text/css">
             html, body
@@ -62,7 +67,7 @@
 
         </style>
     </head>
-    <body onload="startEngine ()">	
+    <body onload="initWebGL ()">	
 		<table cellpadding="0" cellspacing="0" width="100%" height="100%" align="center" valign="middle" border="0">		
 		<tr>
 			<td align="center" valign="middle" colspan="2">	

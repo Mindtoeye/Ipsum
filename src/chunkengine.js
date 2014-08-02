@@ -52,42 +52,6 @@ function addChunk (cellX,cellY)
 /**
 *
 */
-/*
-function checkChunks ()
-{
-	debug ("checkChunks ()");
-	
-	var testTop=0;
-	var testLeft=0;
-	var testRight=mouseHitBox.attrs.width;
-	var testBottom=mouseHitBox.attrs.height;
-	
-	var actualLeft  =globalXReference;
-	var actualTop   =globalYReference;
-	var actualRight =(globalXReference+windowWidth);
-	var actualBottom=(globalYReference+windowHeight);
-	
-	for (var i=0;i<chunksCache.length;i++)
-	{
-		var testChunk=chunksCache [i];
-		
-		if (testChunk.testBounds (testTop,testLeft,testRight,testBottom)==false)
-		{
-			testChunk.unload ();
-		}
-		else
-		{
-			testChunk.load ();
-		}
-	}
-	
-	document.getElementById("chunkinfo").innerHTML=("Chunks: " + chunksCache.length + " ( " +actualLeft + "," + actualTop + "," + actualRight + "," + actualBottom +")");
-}
-*/
-
-/**
-*
-*/
 function checkChunks ()
 {
 	var dirty=true;

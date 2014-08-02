@@ -4,11 +4,32 @@
 */
 function Light ()
 {
-    DescentObject.call(this, "Light","light");
-	
-	var currentValue=defaultBrightness;
-	var up=false;
+    IpsumObject.call(this, "Light","light");
+		
+	/**
+	*
+	*/
+	this.init=function init ()
+	{
+		debug ("init ()");
+		
+		var currentValue=defaultBrightness;
+		var up=false;
 
+		var lightGroup = new THREE.Object3D();	
+		//var lightGeometry = new THREE.SphereGeometry(1,5,5);
+		var lightGeometry = new THREE.BoxGeometry(1,1,1);
+		var lightMaterial = new THREE.MeshBasicMaterial({ color: 0xffff22 });
+		cube = new THREE.Mesh(lightGeometry, lightMaterial); 
+		lightGroup.add(cube);	
+							
+		var light = new THREE.PointLight(0xffffff);
+		light.intensity = 0.90;
+		lightGroup.add(light);
+		
+		this.setReference (lightGroup);		
+	};		
+	
 	/**
 	*
 	*/
@@ -32,6 +53,8 @@ function Light ()
 				up=false;
 			}		
 		}
+		
+		light.intensity=currentValue;
 	};
 	/**
 	*
@@ -39,22 +62,8 @@ function Light ()
 	this.getBrightness=function getBrightness ()
 	{
 		return (currentValue);
-	};
-	/**
-	*
-	*/
-	this.init=function init (anX,anY,aLabel)
-	{
-		this.setPlace (anX,anY);
-		this.setLabel (aLabel);
-		
-		this.debug ("init ("+anX+","+anY+","+aLabel+")");	
-		this.setReference (paper.rect(anX,anY, 20, 20).attr({fill: '#ffff00'}));
-		
-		anim = Raphael.animation({transform: "r360"}, 5000).repeat(Infinity);
-		this.getReference ().animate(anim);
-	};
+	};	
 }
 
-Light.prototype = Object.create(DescentObject.prototype);
-Light.prototype.constructor = DescentObject;
+Light.prototype = Object.create(IpsumObject.prototype);
+Light.prototype.constructor = IpsumObject;

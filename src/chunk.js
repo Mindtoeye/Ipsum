@@ -101,19 +101,19 @@ function Chunk ()
 		// Row 1 ...
 		
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX);
 		cell.setCellY (cellY);
 		cells.push (cell);
 				
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+1);
 		cell.setCellY (cellY);		
 		cells.push (cell);
 
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+2);
 		cell.setCellY (cellY);		
 		cells.push (cell);
@@ -121,19 +121,19 @@ function Chunk ()
 		// Row 2 ...
 		
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX);
 		cell.setCellY (cellY+1);		
 		cells.push (cell);
 		
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+1);
 		cell.setCellY (cellY+1);		
 		cells.push (cell);
 
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+2);
 		cell.setCellY (cellY+1);		
 		cells.push (cell);
@@ -141,19 +141,19 @@ function Chunk ()
 		// Row 3 ...
 		
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX);
 		cell.setCellY (cellY+2);
 		cells.push (cell);
 		
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+1);
 		cell.setCellY (cellY+2);		
 		cells.push (cell);
 
 		cell=new Tile ();
-		cell.load (makeImagePath (this.getRandomTile ()));
+		cell.load (makeImagePath (getRandomTile ()));
 		cell.setCellX (cellX+2);
 		cell.setCellY (cellY+2);		
 		cells.push (cell);
@@ -203,22 +203,7 @@ function Chunk ()
 		
 		loaded=false;
 	};	
-		
-	/**
-	*
-	*/
-	this.getRandomTile=function getRandomTile ()
-	{		
-		var testTile=tilesources [Math.floor((Math.random() * (tilesources.length-1)) + 1)];
-		
-		while (testTile.indexOf ('G')!=0) // pick only grass
-		{
-			testTile=tilesources [Math.floor((Math.random() * (tilesources.length-1)) + 1)];
-		}
-	
-		return (testTile);
-	};
-	
+
 	/**
 	*
 	*/

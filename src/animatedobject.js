@@ -4,7 +4,7 @@
 */
 function AnimatedObject ()
 {
-    DescentObject.call(this, "AnimatedObject","object");
+    IpsumObject.call(this, "AnimatedObject","object");
 
 	/**
 	*
@@ -22,5 +22,5 @@ function AnimatedObject ()
 	};
 }
 
-DescentObject.prototype = Object.create(DescentObject.prototype);
-DescentObject.prototype.constructor = DescentObject;
+IpsumObject.prototype = Object.create(IpsumObject.prototype);
+IpsumObject.prototype.constructor = IpsumObject;
