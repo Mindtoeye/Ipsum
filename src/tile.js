@@ -1,6 +1,9 @@
 
-var tileWidth=10;
-var tileHeight=10;
+var uvs = [];
+uvs.push( new THREE.Vector2( 0.0, 0.0 ) );
+uvs.push( new THREE.Vector2( 1.0, 0.0 ) );
+uvs.push( new THREE.Vector2( 1.0, 1.0 ) );
+uvs.push( new THREE.Vector2( 0.0, 1.0 ) );	
 
 /**
 *

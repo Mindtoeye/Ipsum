@@ -44,3 +44,7 @@ var globalXReference=0;
 var globalYReference=0;
 var diePool=null;
 
+var tileWidth=10;
+var tileHeight=10;
+var tileXExtend=2;
+var tileYExtend=2;

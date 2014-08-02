@@ -4,12 +4,6 @@ var scene=null;
 var renderer=null;
 var mesh=null;
 
-var uvs = [];
-uvs.push( new THREE.Vector2( 0.0, 0.0 ) );
-uvs.push( new THREE.Vector2( 1.0, 0.0 ) );
-uvs.push( new THREE.Vector2( 1.0, 1.0 ) );
-uvs.push( new THREE.Vector2( 0.0, 1.0 ) );			
-
 var clock = new THREE.Clock;
 var cube=null;
 var chunkRoot=null;
@@ -22,18 +16,24 @@ var mouseY = 0;
 
 var wanderers=new Array ();
 
+var windowPlane=null;
+
 /**
 *
 */		
 function processMouseMove(evt) 
 {
+	var offsets = document.getElementById('canvas').getBoundingClientRect();
+	var windowX=evt.clientX-offsets.left;
+	var windowY=evt.clientY-offsets.top;
+
 	var deltaX = evt.clientX - mouseX;
 	var	deltaY = evt.clientY - mouseY;
 	
 	mouseX = evt.clientX;
 	mouseY = evt.clientY;
 	
-	setStatus ("x: " + mouseX + ", y: " + mouseY);
+	setStatus ("x: " + windowX + ", y: " + windowY);
 
 	if (!mouseDown) 
 	{
@@ -51,9 +51,16 @@ function processMouseDown(evt)
 {
 	evt.preventDefault();
 
+	var offsets = document.getElementById('canvas').getBoundingClientRect();
+	var windowX=evt.clientX-offsets.left;
+	var windowY=evt.clientY-offsets.top;	
+	
 	mouseDown = true;
+	
 	mouseX = evt.clientX;
 	mouseY = evt.clientY;
+	
+	calculateMouseXY (windowX,windowY);
 }
 /**
 *
@@ -151,15 +158,148 @@ function createChunks ()
 	
 	var chunkGroup = new THREE.Object3D();
 	
-	for (var i=0;i<4;i++)
+	for (var i=0;i<(tileXExtend*2);i++)
 	{
-		for (var j=0;j<4;j++)
+		for (var j=0;j<(tileXExtend*2);j++)
 		{
-			chunkGroup.add(createChunkInCell (i-2,j-2));
+			chunkGroup.add(createChunkInCell (i-tileXExtend,j-tileYExtend));
 		}	
 	}
 
+	sceneRoot.add (chunkGroup);
+	
 	return (chunkGroup);
+}
+/**
+*
+*/	
+function createObjects ()
+{
+	debug ("createObjects ()");
+	
+	for (var i=0;i<10;i++)
+	{
+		var crate=new AnimatedObject ();
+		crate.init ();	
+		crate.setPlace (getRandomInteger (60)-30,getRandomInteger (60)-30);
+	
+		sceneRoot.add (crate.getReference ());
+	}	
+}
+/**
+*
+*/
+function createDebugObjects ()
+{
+	debug ("createDebugObjects ()");
+	
+	windowPlane=new Plane (-100,-100,200,200);
+	windowPlane.init ();
+	scene.add (windowPlane.getReference ());
+	//scene.add(new THREE.AmbientLight(0xffffff));
+}
+/**
+*
+*/
+function calcBoundingPlanes ()
+{
+	debug ("calcBoundingPlanes ()");
+	
+	var mouse3D=null;	
+	var debugObjects = [];
+	var raycaster =null;
+	var intersects =null;
+	
+	debugObjects.push (windowPlane.getReference ());
+		
+	projector = new THREE.Projector();
+	
+	// Top Left
+	mouse3D = new THREE.Vector3 (getScreenX2Cartesian (0),getScreenY2Cartesian (0),0.5);
+								 
+	projector.unprojectVector( mouse3D, camera );								
+
+	raycaster = new THREE.Raycaster (camera.position,mouse3D.sub (camera.position).normalize());	
+	
+	intersects = raycaster.intersectObjects (debugObjects);
+	
+	if (intersects.length>0) 
+	{
+		intersects[0].point.y=-intersects[0].point.y;
+	
+		debug ("Top left: ("+intersects.length+") " + intersects[0].point.x + "," + intersects[0].point.y + "," + intersects[0].point.z);	
+	
+		/*
+		var crate=new AnimatedObject ();
+		crate.init ();	
+		crate.setPlace (intersects[0].point.x,intersects[0].point.y);
+	
+		sceneRoot.add (crate.getReference ());		
+		*/
+	}	
+				
+	// Bottom Right
+	mouse3D = new THREE.Vector3 (getScreenX2Cartesian (windowWidth),getScreenY2Cartesian (windowHeight),0.5);
+								
+	projector.unprojectVector( mouse3D, camera );																
+								
+	raycaster = new THREE.Raycaster (camera.position,mouse3D.sub (camera.position).normalize());	
+	intersects = raycaster.intersectObjects (debugObjects);
+	
+	if (intersects.length>0) 
+	{
+		intersects[0].point.y=-intersects[0].point.y;
+		
+		debug ("Bottom right: ("+intersects.length+") " + intersects[0].point.x + "," + intersects[0].point.y + "," + intersects[0].point.z);	
+		
+		/*
+		var crate=new AnimatedObject ();
+		crate.init ();	
+		crate.setPlace (intersects[0].point.x,intersects[0].point.y);
+	
+		sceneRoot.add (crate.getReference ());		
+		*/
+	}									
+}
+/**
+*
+*/
+function calculateMouseXY (mouseX,mouseY)
+{
+	debug ("calculateMouseXY ("+mouseX+","+mouseY+")");
+
+	var mouse3D=null;	
+	var debugObjects = [];
+	var raycaster =null;
+	var intersects =null;
+	
+	debugObjects.push (windowPlane.getReference ());
+		
+	projector = new THREE.Projector();
+	
+	// Top Left
+	mouse3D = new THREE.Vector3 (getScreenX2Cartesian (mouseX),getScreenY2Cartesian (mouseY),0.5);
+								 
+	projector.unprojectVector (mouse3D,camera);
+
+	raycaster = new THREE.Raycaster (camera.position,mouse3D.sub (camera.position).normalize());	
+	
+	intersects = raycaster.intersectObjects (debugObjects);
+	
+	if (intersects.length>0) 
+	{
+		intersects[0].point.y=-intersects[0].point.y;
+	
+		debug ("Top left: ("+intersects.length+") " + intersects[0].point.x + "," + intersects[0].point.y + "," + intersects[0].point.z);	
+
+		/*	
+		var crate=new AnimatedObject ();
+		crate.init ();	
+		crate.setPlace (intersects[0].point.x,-intersects[0].point.y);
+	
+		sceneRoot.add (crate.getReference ());
+		*/
+	}	
 }
 /**
 *
@@ -172,22 +312,22 @@ function createScene()
 	
 	sceneRoot = new THREE.Object3D();
 		
-	chunkRoot=createChunks ();
-	sceneRoot.add (chunkRoot);
+	createDebugObjects ();
+				
+	createChunks ();
 	
-	lightRoot=addLight ();
-	sceneRoot.add (lightRoot.getReference ());	
-	lightRoot.getReference ().position.set(0,0,10);
-	wanderers.push (new Wanderer (lightRoot.getReference ()));
+	createLights ();
 	
-	lightRoot=addLight ();
-	sceneRoot.add (lightRoot.getReference ());	
-	lightRoot.getReference ().position.set(0,0,10);
-	wanderers.push (new Wanderer (lightRoot.getReference ()));	
-	
-	//scene.add(new THREE.AmbientLight(0x444444));		
+	createObjects();
 		
 	scene.add (sceneRoot);
+	
+	// We need to do at least one render cycle before we do any raycasting otherwise
+	// the numbers will be completely off
+	
+	renderer.render (scene,camera);
+	
+	calcBoundingPlanes ();
 }			
 /**
 *
@@ -202,22 +342,25 @@ function initWebGL()
 	canvas.style.height = (windowHeight+'px');
 	
 	renderer = new THREE.WebGLRenderer();
+	renderer.shadowMapEnabled = true;
+	renderer.shadowMapSoft = true;
 	
 	var sceneDiv=document.getElementById ("canvas");
 	sceneDiv.appendChild(renderer.domElement);
 
-	camera = new THREE.PerspectiveCamera (70,(windowWidth/windowHeight), 1, 1000 );
-	camera.position.z = 50;
+	camera = new THREE.PerspectiveCamera (50,(windowWidth/windowHeight), 1, 500 );
+	camera.position.z = 100;
 	
 	createScene();
-
+			
+	setSize ();
+	
+	render ();
+	
 	// need both for FF and Webkit - others I haven't tested
 	window.addEventListener ('DOMMouseScroll', mousewheel, false);
 	window.addEventListener ('mousewheel', mousewheel, false);				
-	window.addEventListener ('resize',onWindowResize,false);				
-		
-	setSize ();
-	render ();
+	window.addEventListener ('resize',onWindowResize,false);		
 	
 	canvas.addEventListener('mousemove',processMouseMove);
 	canvas.addEventListener('mousedown',processMouseDown);
@@ -275,6 +418,8 @@ function render ()
 	{
 		wanderers [i].update();
 	}
+	
+	checkLights ();
 }
 
 /**
@@ -309,3 +454,24 @@ function mousewheel (event)
 	cPos.y = ny;
 	cPos.z = nz;
 }
+
+/*
+var init = function() {
+  camera = new THREE.OrthographicCamera( SCREEN_WIDTH / - 2, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_HEIGHT / - 2, NEAR, FAR);
+  document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+}
+
+function onDocumentMouseDown( e ) {
+  e.preventDefault();
+  var mouseVector = new THREE.Vector3();
+  mouseVector.x = 2 * (e.clientX / SCREEN_WIDTH) - 1;
+  mouseVector.y = 1 - 2 * ( e.clientY / SCREEN_HEIGHT );
+  var raycaster = projector.pickingRay( mouseVector.clone(), camera );
+  var intersects = raycaster.intersectObject( TARGET );
+  for( var i = 0; i < intersects.length; i++ ) {
+    var intersection = intersects[ i ],
+    obj = intersection.object;
+    console.log("Intersected object", obj);
+  }
+}
+*/

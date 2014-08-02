@@ -6,21 +6,28 @@ function AnimatedObject ()
 {
     IpsumObject.call(this, "AnimatedObject","object");
 
+	var objectGeometry = null;
+	var objectTexture = null;
+	var objectPolygonMaterial = null;
+	var object = null;
+		
 	/**
 	*
 	*/
-	this.init=function init (anX,anY,aLabel)
+	this.init=function init ()
 	{
-		this.setPlace (anX,anY);
-		this.setLabel (aLabel);
+		debug ("init ()");
 		
-		this.debug ("init ("+anX+","+anY+","+aLabel+")");	
-		this.setReference (paper.rect(anX,anY, 20, 20).attr({fill: '#F00'}));
+		var objectGeometry = new THREE.BoxGeometry(5,5,5);
+		var objectTexture = THREE.ImageUtils.loadTexture ('textures/crate.gif');
+		var objectPolygonMaterial = new THREE.MeshLambertMaterial ({map: objectTexture});
+		var object = new THREE.Mesh (objectGeometry,objectPolygonMaterial);
 		
-		anim = Raphael.animation({transform: "r360"}, 5000).repeat(Infinity);
-		this.getReference ().animate(anim);
+		this.setReference (object);
+		
+		object.position.z=2.5;
 	};
 }
 
-IpsumObject.prototype = Object.create(IpsumObject.prototype);
-IpsumObject.prototype.constructor = IpsumObject;
+AnimatedObject.prototype = Object.create(IpsumObject.prototype);
+AnimatedObject.prototype.constructor = IpsumObject;

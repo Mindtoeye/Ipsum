@@ -55,4 +55,19 @@ function getRandomInteger (aRange)
 {
 	return (Math.floor((Math.random() * (aRange-1)) + 1));
 }
-	
+
+/**
+*
+*/
+function getScreenX2Cartesian (anX)
+{
+	return ( (anX / windowWidth ) * 2 - 1);
+}
+
+/**
+*
+*/
+function getScreenY2Cartesian (anY)
+{
+	return ( (anY / windowHeight ) * 2 - 1);
+}

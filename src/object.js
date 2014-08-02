@@ -126,6 +126,12 @@ function IpsumObject ()
 	this.setReference=function setReference (aRef)
 	{
 		reference=aRef;
+		
+		if (reference!=null)
+		{
+			reference.castShadow = true;
+			reference.receiveShadow = false;		
+		}
 	};
 	
 	/**
