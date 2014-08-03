@@ -15,54 +15,37 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
- 
-var uvs = [];
-uvs.push( new THREE.Vector2( 0.0, 0.0 ) );
-uvs.push( new THREE.Vector2( 1.0, 0.0 ) );
-uvs.push( new THREE.Vector2( 1.0, 1.0 ) );
-uvs.push( new THREE.Vector2( 0.0, 1.0 ) );	
 
 /**
 *
 */
-function Tile (aTexture)
+function Plane (aX,aY,aWidth,aHeight)
 {
-    IpsumObject.call(this, "Tile","tile");
+    IpsumObject.call(this, "Plane","plane");
 	
-	var cellX =0;
-	var cellY =0;	
-	var tileX =0;
-	var tileY =0;
-	var width =tileWidth;
-	var height=tileHeight;
-
-	var myTexture = null;
-	var myPolygonMaterial = null;
-	var polygonObject = null;
 	var geo = new THREE.Geometry();
+	var polygonObject = null;
 
 	/**
 	*
 	*/
 	this.init=function init ()
 	{
-		debug ("init ()");
+		this.debug ("init ()");
 		
-		geo.vertices.push( new THREE.Vector3( 0.0, 0.0, 0.0 ) );
-		geo.vertices.push( new THREE.Vector3( tileWidth, 0.0, 0.0 ) );
-		geo.vertices.push( new THREE.Vector3( tileWidth, tileWidth, 0.0 ) );
-		geo.vertices.push( new THREE.Vector3( 0.0, tileWidth, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( aX, aY, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( aX, aY+aHeight, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( aX+aWidth, aY+aHeight, 0.0 ) );
+		geo.vertices.push( new THREE.Vector3( aX+aWidth, aY, 0.0 ) );
 						
-		geo.faces.push( new THREE.Face3( 0, 1, 2 ) );
-		geo.faces.push( new THREE.Face3( 0, 2, 3 ) );
-		
-		geo.faceVertexUvs [0].push([ uvs[0], uvs[1], uvs[2]]);
-		geo.faceVertexUvs [0].push([ uvs[0], uvs[2], uvs[3]]);
-		geo.computeFaceNormals();
-		
-		myTexture = THREE.ImageUtils.loadTexture (aTexture);
-		myPolygonMaterial = new THREE.MeshLambertMaterial ({map: myTexture});
-		myPolygonMaterial.side = THREE.DoubleSide;
+		geo.faces.push (new THREE.Face3(0,1,2));
+		geo.faces.push (new THREE.Face3(0,2,3));
+				
+		// Just as a note the plane material doesn't have to be transparent but it helps to
+		// prevent making any mistakes using them because they will always be hidden
+		var myPolygonMaterial = new THREE.MeshBasicMaterial ({color: 0xffffff, transparent: true, opacity: 0.0});		
+		//var myPolygonMaterial = new THREE.MeshBasicMaterial ({color: 0xffffff});		
+		myPolygonMaterial.side = THREE.DoubleSide; // VERY IMPORTANT
 		polygonObject = new THREE.Mesh (geo,myPolygonMaterial);
 
 		this.setReference (polygonObject);		
@@ -206,31 +189,7 @@ function Tile (aTexture)
 	{
 
 	};
-	
-	/**
-	*
-	*/
-	this.load=function load ()
-	{
-
-	};
-	
-	/**
-	*
-	*/
-	this.setBrightness=function setBrightness (aValue)
-	{
-		myPolygonMaterial.opacity=aValue;
-	};
-	
-	/**
-	*
-	*/
-	this.unload=function unload ()
-	{
-		
-	};
 }
 
-Tile.prototype = Object.create(IpsumObject.prototype);
-Tile.prototype.constructor = IpsumObject;
+Plane.prototype = Object.create(IpsumObject.prototype);
+Plane.prototype.constructor = IpsumObject;

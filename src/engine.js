@@ -1,22 +1,20 @@
-
-var camera=null;
-var scene=null;
-var renderer=null;
-var mesh=null;
-
-var clock = new THREE.Clock;
-var cube=null;
-var chunkRoot=null;
-var sceneRoot=null;
-var lightRoot=null;
-
-var mouseDown = false;
-var mouseX = 0;
-var mouseY = 0;
-
-var wanderers=new Array ();
-
-var windowPlane=null;
+/** 
+ * Author: Martin van Velsen <vvelsen@cs.cmu.edu>
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as 
+ *  published by the Free Software Foundation, either version 3 of the 
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
 
 /**
 *
@@ -228,6 +226,9 @@ function calcBoundingPlanes ()
 		intersects[0].point.y=-intersects[0].point.y;
 	
 		debug ("Top left: ("+intersects.length+") " + intersects[0].point.x + "," + intersects[0].point.y + "," + intersects[0].point.z);	
+		
+		windowLeft=intersects[0].point.x;
+		windowTop =intersects[0].point.y;
 	
 		/*
 		var crate=new AnimatedObject ();
@@ -251,6 +252,9 @@ function calcBoundingPlanes ()
 		intersects[0].point.y=-intersects[0].point.y;
 		
 		debug ("Bottom right: ("+intersects.length+") " + intersects[0].point.x + "," + intersects[0].point.y + "," + intersects[0].point.z);	
+		
+		windowRight=intersects[0].point.x;
+		windowBottom =intersects[0].point.y;		
 		
 		/*
 		var crate=new AnimatedObject ();
@@ -334,7 +338,7 @@ function createScene()
 */
 function initWebGL() 
 {
-	console.log ("init ()");
+	debug ("init ()");
 
 	var canvas=document.getElementById("canvas");
 	
@@ -372,7 +376,7 @@ function initWebGL()
 */
 function onWindowResize() 
 {
-	console.log ("onWindowResize ()");
+	debug ("onWindowResize ()");
 	
 	setSize ();
 }
@@ -382,7 +386,7 @@ function onWindowResize()
 */
 function setSize ()
 {
-	console.log ("setSize ()");
+	debug ("setSize ()");
 
 	camera.aspect = (windowWidth / windowHeight);
 	camera.updateProjectionMatrix();

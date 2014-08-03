@@ -1,3 +1,21 @@
+/** 
+ * Author: Martin van Velsen <vvelsen@cs.cmu.edu>
+ * 
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as 
+ *  published by the Free Software Foundation, either version 3 of the 
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ */
+
 /**
 *
 */
@@ -59,18 +77,18 @@ function Chunk ()
 	};
 	
 	/**
-	* Nice and quick way to get target tile. Nice because it ONLY
+	* Nice and quick way to get a target tile. Nice because it ONLY
 	* finds visible tiles!
 	*/
 	this.getTile=function getTile (cellX,cellY)
 	{
-		//debug ("getTile ("+cellX+","+cellY+")");
+		//this.debug ("getTile ("+cellX+","+cellY+")");
 		
 		for (var i=0;i<cells.length;i++)
 		{
 			var testTile=cells [i];
 			
-			//debug ("Comparing " + cellX + "," + cellY + ", to: " + testTile.getCellX () + "," + testTile.getCellY ());
+			//this.debug ("Comparing " + cellX + "," + cellY + ", to: " + testTile.getCellX () + "," + testTile.getCellY ());
 			
 			if ((testTile.getCellX ()==cellX) && (testTile.getCellY ()==cellY))
 			{
@@ -88,11 +106,11 @@ function Chunk ()
 	{		
 		if (loaded==true)
 		{
-			//debug ("Already loaded");
+			//this.debug ("Already loaded");
 			return;
 		}
 		
-		this.debug ("load ()");		
+		this.this.debug ("load ()");		
 	
 		cells=new Array (); // A bit too brute force
 	
@@ -186,7 +204,7 @@ function Chunk ()
 	*/
 	this.unload=function unload ()
 	{
-		this.debug ("unload ()");
+		this.this.debug ("unload ()");
 	
 		if (cells==null)
 		{
@@ -233,29 +251,29 @@ function Chunk ()
 	*/
 	this.testBounds=function testBounds (aLeft,aTop,aRight,aBottom)
 	{
-		//this.debug ("testBounds ("+aLeft+","+aTop+","+aRight+","+aBottom+")")
+		//this.this.debug ("testBounds ("+aLeft+","+aTop+","+aRight+","+aBottom+")")
 
 		if (chunkLeft>aRight)
 		{
-			//this.debug ("Chunk out of bounds (left)");
+			//this.this.debug ("Chunk out of bounds (left)");
 			return (false);
 		}		
 		
 		if (chunkTop>aBottom)
 		{
-			//this.debug ("Chunk out of bounds (top)");
+			//this.this.debug ("Chunk out of bounds (top)");
 			return (false);
 		}		
 		
 		if (chunkRight<aLeft)			
 		{
-			//this.debug ("Chunk out of bounds (right)");
+			//this.this.debug ("Chunk out of bounds (right)");
 			return (false);
 		}
 
 		if (chunkBottom<aTop)
 		{
-			//this.debug ("Chunk out of bounds (bottom)");
+			//this.this.debug ("Chunk out of bounds (bottom)");
 			return (false);
 		}		
 
